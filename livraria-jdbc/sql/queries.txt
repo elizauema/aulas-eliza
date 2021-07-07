@@ -4,7 +4,27 @@ USE livraria;
 
 CREATE TABLE livros (
 	titulo VARCHAR(100) NOT NULL,
-	autor VARCHAR(100) NOT NULL
+	autor VARCHAR(100) NOT NULL,
 );
 
+CREATE TABLE livrosn (
+	titulo VARCHAR(100) NOT NULL,
+	autor VARCHAR(100) NOT NULL,
+	genero varchar(50) not null,
+	editora varchar(50) not null,
+	edicao int(3),
+	qtde_estoque int(6),
+	qtde_reserva int(6),
+	capa varchar(100),
+	data_prim_publicacao date,
+	data_cadastro date,
+	data_alteracao date
+);
+ 
+	
+//	ALTER TABLE livros 
+//    ADD genero varchar(50);
+
 SELECT * FROM livros;
+
+desc livros1;
