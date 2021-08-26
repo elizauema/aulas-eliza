@@ -45,4 +45,32 @@ public class NotaPK implements Serializable {
 		public void setMateriaPK(long materiaPK) {
 			this.materiaPK = materiaPK;
 		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (int) (alunoPK ^ (alunoPK >>> 32));
+			result = prime * result + (int) (materiaPK ^ (materiaPK >>> 32));
+			result = prime * result + (int) (seriePK ^ (seriePK >>> 32));
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			NotaPK other = (NotaPK) obj;
+			if (alunoPK != other.alunoPK)
+				return false;
+			if (materiaPK != other.materiaPK)
+				return false;
+			if (seriePK != other.seriePK)
+				return false;
+			return true;
+		}
 }

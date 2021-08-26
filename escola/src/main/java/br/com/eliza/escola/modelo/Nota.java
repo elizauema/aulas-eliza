@@ -6,9 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "notas")
 public class Nota {
+	
 	@EmbeddedId
 	private NotaPK pk;
 	

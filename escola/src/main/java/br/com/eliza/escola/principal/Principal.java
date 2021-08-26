@@ -2,10 +2,14 @@ package br.com.eliza.escola.principal;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
+
 import javax.persistence.EntityManager;
+
 import br.com.eliza.escola.dao.AlunoDao;
 import br.com.eliza.escola.dao.MateriaDao;
 import br.com.eliza.escola.dao.NotaDao;
@@ -15,6 +19,7 @@ import br.com.eliza.escola.modelo.Materia;
 import br.com.eliza.escola.modelo.Nota;
 import br.com.eliza.escola.modelo.NotaPK;
 import br.com.eliza.escola.modelo.Serie;
+import br.com.eliza.escola.util.DateUtil;
 import br.com.eliza.escola.util.JPAUtil;
 
 public class Principal {
@@ -105,7 +110,7 @@ public class Principal {
 					System.out.println("Sobrenome..:");
 					sobrenome = scanner.nextLine();
 					System.out.println("Data Nascto:");
-					while (dataNascto == null) {
+					/*while (dataNascto == null) {
 						data_dma = scanner.nextLine();
 						ano_dma = Integer.parseInt(data_dma.substring(4));
 						mes_dma = Integer.parseInt(data_dma.substring(2, 4));
@@ -126,6 +131,18 @@ public class Principal {
 										Integer.parseInt(data_dma.substring(0, 2)));
 							}
 						}
+					}*/
+					while(true) {
+						data_dma = scanner.nextLine();
+						ano_dma = Integer.parseInt(data_dma.substring(4));
+						mes_dma = Integer.parseInt(data_dma.substring(2, 4));
+						dia_dma = Integer.parseInt(data_dma.substring(0, 2));
+						DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd", Locale.getDefault())
+				    		    .withResolverStyle(ResolverStyle.STRICT);
+				    	if(DateUtil.isValid(ano_dma + "-" + mes_dma + "-" + dia_dma, dateFormatter)) {
+				    		dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
+				    		break;
+				    	}
 					}
 					// dataNascto = LocalDate.now();
 					System.out.println(dataNascto);
