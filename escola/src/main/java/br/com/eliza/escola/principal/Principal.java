@@ -150,15 +150,20 @@ public class Principal {
 					cpf = scanner.nextLine();
 					System.out.println("Serie Atual:");
 					serieAtual = scanner.nextLine();
-					Aluno alunoA = new Aluno(nome, sobrenome, dataNascto, cpf, serieAtual);
-					AlunoDao alunoDaoA = new AlunoDao(em);
+					
+					aluno.setNome(nome);
+					aluno.setSobrenome(sobrenome);
+					aluno.setDataNascto(dataNascto);
+					aluno.setCpf(cpf);
+					aluno.setSerieAtual(serieAtual);
+					
 					resp = " ";
 					System.out.println("Confirma a Alteração?:");
 					resp = scanner.next();
 					scanner.nextLine();
 					if (resp.equals("S") || resp.equals("s")) {
 						em.getTransaction().begin();
-						alunoDaoA.atualizar(alunoA);
+						alunoDao.atualizar(aluno);
 						em.getTransaction().commit();
 						System.out.println("Aluno Alterado ");
 					}
@@ -183,13 +188,9 @@ public class Principal {
 			System.out.println("Sobrenome..:");
 			sobrenome = scanner.nextLine();
 			
-			while(dataNascto == null) {
-			//while(true) {
+			while(true) {
 				System.out.println("Data Nascto:");
 				data_dma = scanner.nextLine();
-//				dia_dma = Integer.parseInt(data_dma.substring(6, 8));
-//				mes_dma = Integer.parseInt(data_dma.substring(4, 6));
-//				ano_dma = Integer.parseInt(data_dma.substring(0, 4));
 				ano_dma = Integer.parseInt(data_dma.substring(4));
 				mes_dma = Integer.parseInt(data_dma.substring(2, 4));
 				dia_dma = Integer.parseInt(data_dma.substring(0, 2));
