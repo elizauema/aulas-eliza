@@ -109,7 +109,6 @@ public class Principal {
 					nome = scanner.nextLine();
 					System.out.println("Sobrenome..:");
 					sobrenome = scanner.nextLine();
-					System.out.println("Data Nascto:");
 					/*while (dataNascto == null) {
 						data_dma = scanner.nextLine();
 						ano_dma = Integer.parseInt(data_dma.substring(4));
@@ -133,13 +132,14 @@ public class Principal {
 						}
 					}*/
 					while(true) {
+						System.out.println("Data Nascto:");
 						data_dma = scanner.nextLine();
 						ano_dma = Integer.parseInt(data_dma.substring(4));
 						mes_dma = Integer.parseInt(data_dma.substring(2, 4));
 						dia_dma = Integer.parseInt(data_dma.substring(0, 2));
 						DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd", Locale.getDefault())
 				    		    .withResolverStyle(ResolverStyle.STRICT);
-				    	if(DateUtil.isValid(ano_dma + "-" + mes_dma + "-" + dia_dma, dateFormatter)) {
+				    	if(DateUtil.isValid(data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2), dateFormatter)) {
 				    		dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
 				    		break;
 				    	}
@@ -182,29 +182,48 @@ public class Principal {
 			nome = scanner.nextLine();
 			System.out.println("Sobrenome..:");
 			sobrenome = scanner.nextLine();
-			System.out.println("Data Nascto:");
-			while (dataNascto == null) {
+			
+			while(dataNascto == null) {
+			//while(true) {
+				System.out.println("Data Nascto:");
 				data_dma = scanner.nextLine();
+//				dia_dma = Integer.parseInt(data_dma.substring(6, 8));
+//				mes_dma = Integer.parseInt(data_dma.substring(4, 6));
+//				ano_dma = Integer.parseInt(data_dma.substring(0, 4));
 				ano_dma = Integer.parseInt(data_dma.substring(4));
 				mes_dma = Integer.parseInt(data_dma.substring(2, 4));
 				dia_dma = Integer.parseInt(data_dma.substring(0, 2));
-				if (ano_dma > 0 && (mes_dma > 0 && mes_dma < 13) && (dia_dma > 0 && dia_dma < 32)) {
-					if (mes_dma == 2 && dia_dma < 29) {
-						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-								Integer.parseInt(data_dma.substring(0, 2)));
-					} else if (dia_dma <= 31 && (mes_dma == 1 || mes_dma == 3 || mes_dma == 5 || mes_dma == 7
-							|| mes_dma == 8 || mes_dma == 10 || mes_dma == 12)) {
-						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-								Integer.parseInt(data_dma.substring(0, 2)));
-					} else if (dia_dma <= 30 && (mes_dma == 4 || mes_dma == 6 || mes_dma == 9 || mes_dma == 11)) {
-						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-								Integer.parseInt(data_dma.substring(0, 2)));
-					}
-				}
+				System.out.println("dia:"+dia_dma+ " mes:"+mes_dma+ " ano:"+ano_dma);
+				
+				DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd", Locale.getDefault())
+		    		    .withResolverStyle(ResolverStyle.STRICT);
+		    	if(DateUtil.isValid(data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2), dateFormatter)) {
+		    		dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
+		    		break;
+		    	}
 			}
+//			while (dataNascto == null) {
+//				data_dma = scanner.nextLine();
+//				ano_dma = Integer.parseInt(data_dma.substring(4));
+//				mes_dma = Integer.parseInt(data_dma.substring(2, 4));
+//				dia_dma = Integer.parseInt(data_dma.substring(0, 2));
+//				if (ano_dma > 0 && (mes_dma > 0 && mes_dma < 13) && (dia_dma > 0 && dia_dma < 32)) {
+//					if (mes_dma == 2 && dia_dma < 29) {
+//						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+//								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+//								Integer.parseInt(data_dma.substring(0, 2)));
+//					} else if (dia_dma <= 31 && (mes_dma == 1 || mes_dma == 3 || mes_dma == 5 || mes_dma == 7
+//							|| mes_dma == 8 || mes_dma == 10 || mes_dma == 12)) {
+//						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+//								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+//								Integer.parseInt(data_dma.substring(0, 2)));
+//					} else if (dia_dma <= 30 && (mes_dma == 4 || mes_dma == 6 || mes_dma == 9 || mes_dma == 11)) {
+//						dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+//								Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+//								Integer.parseInt(data_dma.substring(0, 2)));
+//					}
+//				}
+//			}
 			// dataNascto = LocalDate.now();
 			System.out.println(dataNascto);
 			System.out.println("C.P.F......:");
