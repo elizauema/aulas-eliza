@@ -157,7 +157,6 @@ public class Principal {
 					aluno.setDataNascto(dataNascto);
 					aluno.setCpf(cpf);
 					aluno.setSerieAtual(serieAtual);
-
 					resp = " ";
 					System.out.println("Confirma a Alteração?:");
 					resp = scanner.next();
@@ -189,7 +188,7 @@ public class Principal {
 			System.out.println("Sobrenome..:");
 			sobrenome = scanner.nextLine();
 
-			while (true) {
+			while(true) {
 				System.out.println("Data Nascto:");
 				data_dma = scanner.nextLine();
 				ano_dma = Integer.parseInt(data_dma.substring(4));
