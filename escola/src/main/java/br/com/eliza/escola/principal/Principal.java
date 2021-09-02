@@ -1,5 +1,6 @@
 package br.com.eliza.escola.principal;
 
+//https://github.com/elizauema/aulas-eliza/blob/main/escola/src/main/java/br/com/eliza/escola/principal/Principal.java
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -91,9 +92,10 @@ public class Principal {
 		System.out.println("I.D........:");
 		id = scanner.nextLong();
 		String resp;
-		AlunoDao alunoDao = new AlunoDao(em);
-		Aluno aluno = alunoDao.buscarPorId(id);
+
 		if (id > 0) {
+			AlunoDao alunoDao = new AlunoDao(em);
+			Aluno aluno = alunoDao.buscarPorId(id);
 			if (aluno.getNome() != " ") {
 				System.out.println("Nome.......:" + aluno.getNome());
 				System.out.println("Sobrenome..:" + aluno.getSobrenome());
@@ -103,46 +105,46 @@ public class Principal {
 				System.out.println("<A>lteração  <E>xclusão:");
 				resp = scanner.next();
 				System.out.println(resp);
-				if (resp.equals("A")) {
+				if (resp.equals("A") || resp.equals("a")) {
 					System.out.println("Nome.......:");
 					scanner.nextLine();
 					nome = scanner.nextLine();
 					System.out.println("Sobrenome..:");
 					sobrenome = scanner.nextLine();
-					/*while (dataNascto == null) {
-						data_dma = scanner.nextLine();
-						ano_dma = Integer.parseInt(data_dma.substring(4));
-						mes_dma = Integer.parseInt(data_dma.substring(2, 4));
-						dia_dma = Integer.parseInt(data_dma.substring(0, 2));
-						if (ano_dma > 0 && (mes_dma > 0 && mes_dma < 13) && (dia_dma > 0 && dia_dma < 32)) {
-							if (mes_dma == 2 && dia_dma < 29) {
-								dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-										Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-										Integer.parseInt(data_dma.substring(0, 2)));
-							} else if (dia_dma <= 31 && (mes_dma == 1 || mes_dma == 3 || mes_dma == 5 || mes_dma == 7
-									|| mes_dma == 8 || mes_dma == 10 || mes_dma == 12)) {
-								dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-										Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-										Integer.parseInt(data_dma.substring(0, 2)));
-							} else if (dia_dma <= 30 && (mes_dma == 4 || mes_dma == 6 || mes_dma == 9 || mes_dma == 11)) {
-								dataNascto = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
-										Month.of(Integer.parseInt(data_dma.substring(2, 4))),
-										Integer.parseInt(data_dma.substring(0, 2)));
-							}
-						}
-					}*/
-					while(true) {
+					/*
+					 * while (dataNascto == null) { data_dma = scanner.nextLine(); ano_dma =
+					 * Integer.parseInt(data_dma.substring(4)); mes_dma =
+					 * Integer.parseInt(data_dma.substring(2, 4)); dia_dma =
+					 * Integer.parseInt(data_dma.substring(0, 2)); if (ano_dma > 0 && (mes_dma > 0
+					 * && mes_dma < 13) && (dia_dma > 0 && dia_dma < 32)) { if (mes_dma == 2 &&
+					 * dia_dma < 29) { dataNascto =
+					 * LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+					 * Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+					 * Integer.parseInt(data_dma.substring(0, 2))); } else if (dia_dma <= 31 &&
+					 * (mes_dma == 1 || mes_dma == 3 || mes_dma == 5 || mes_dma == 7 || mes_dma == 8
+					 * || mes_dma == 10 || mes_dma == 12)) { dataNascto =
+					 * LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+					 * Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+					 * Integer.parseInt(data_dma.substring(0, 2))); } else if (dia_dma <= 30 &&
+					 * (mes_dma == 4 || mes_dma == 6 || mes_dma == 9 || mes_dma == 11)) { dataNascto
+					 * = LocalDate.of(Integer.parseInt(data_dma.substring(4)),
+					 * Month.of(Integer.parseInt(data_dma.substring(2, 4))),
+					 * Integer.parseInt(data_dma.substring(0, 2))); } } }
+					 */
+					while (true) {
 						System.out.println("Data Nascto:");
 						data_dma = scanner.nextLine();
 						ano_dma = Integer.parseInt(data_dma.substring(4));
 						mes_dma = Integer.parseInt(data_dma.substring(2, 4));
 						dia_dma = Integer.parseInt(data_dma.substring(0, 2));
 						DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd", Locale.getDefault())
-				    		    .withResolverStyle(ResolverStyle.STRICT);
-				    	if(DateUtil.isValid(data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2), dateFormatter)) {
-				    		dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
-				    		break;
-				    	}
+								.withResolverStyle(ResolverStyle.STRICT);
+						if (DateUtil.isValid(
+								data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2),
+								dateFormatter)) {
+							dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
+							break;
+						}
 					}
 					// dataNascto = LocalDate.now();
 					System.out.println(dataNascto);
@@ -150,19 +152,23 @@ public class Principal {
 					cpf = scanner.nextLine();
 					System.out.println("Serie Atual:");
 					serieAtual = scanner.nextLine();
-					Aluno alunoA = new Aluno(nome, sobrenome, dataNascto, cpf, serieAtual);
-					AlunoDao alunoDaoA = new AlunoDao(em);
+					aluno.setNome(nome);
+					aluno.setSobrenome(sobrenome);
+					aluno.setDataNascto(dataNascto);
+					aluno.setCpf(cpf);
+					aluno.setSerieAtual(serieAtual);
+
 					resp = " ";
 					System.out.println("Confirma a Alteração?:");
 					resp = scanner.next();
 					scanner.nextLine();
 					if (resp.equals("S") || resp.equals("s")) {
 						em.getTransaction().begin();
-						alunoDaoA.atualizar(alunoA);
+						alunoDao.atualizar(aluno);
 						em.getTransaction().commit();
 						System.out.println("Aluno Alterado ");
 					}
-				} else if (resp.equals("E")) {
+				} else if (resp.equals("E") || resp.equals("e")) {
 					resp = " ";
 					System.out.println("Confirma a Exclusao de.:" + aluno.getNome());
 					resp = scanner.next();
@@ -182,25 +188,23 @@ public class Principal {
 			nome = scanner.nextLine();
 			System.out.println("Sobrenome..:");
 			sobrenome = scanner.nextLine();
-			
-			while(dataNascto == null) {
-			//while(true) {
+
+			while (true) {
 				System.out.println("Data Nascto:");
 				data_dma = scanner.nextLine();
-//				dia_dma = Integer.parseInt(data_dma.substring(6, 8));
-//				mes_dma = Integer.parseInt(data_dma.substring(4, 6));
-//				ano_dma = Integer.parseInt(data_dma.substring(0, 4));
 				ano_dma = Integer.parseInt(data_dma.substring(4));
 				mes_dma = Integer.parseInt(data_dma.substring(2, 4));
 				dia_dma = Integer.parseInt(data_dma.substring(0, 2));
-				System.out.println("dia:"+dia_dma+ " mes:"+mes_dma+ " ano:"+ano_dma);
-				
+				System.out.println("dia:" + dia_dma + " mes:" + mes_dma + " ano:" + ano_dma);
+
 				DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd", Locale.getDefault())
-		    		    .withResolverStyle(ResolverStyle.STRICT);
-		    	if(DateUtil.isValid(data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2), dateFormatter)) {
-		    		dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
-		    		break;
-		    	}
+						.withResolverStyle(ResolverStyle.STRICT);
+				if (DateUtil.isValid(
+						data_dma.substring(4) + "-" + data_dma.substring(2, 4) + "-" + data_dma.substring(0, 2),
+						dateFormatter)) {
+					dataNascto = LocalDate.of(ano_dma, Month.of(mes_dma), dia_dma);
+					break;
+				}
 			}
 //			while (dataNascto == null) {
 //				data_dma = scanner.nextLine();
@@ -230,19 +234,19 @@ public class Principal {
 			cpf = scanner.nextLine();
 			System.out.println("Serie Atual:");
 			serieAtual = scanner.nextLine();
-			Aluno alunoI = new Aluno(nome, sobrenome, dataNascto, cpf, serieAtual);
-			AlunoDao alunoDaoI = new AlunoDao(em);
+			Aluno aluno = new Aluno(nome, sobrenome, dataNascto, cpf, serieAtual);
+			AlunoDao alunoDao = new AlunoDao(em);
+
 			resp = " ";
 			System.out.println("Confirma a Inclusão?:");
 			resp = scanner.nextLine();
-			scanner.nextLine();
 			if (resp.equals("S") || resp.equals("s")) {
 				em.getTransaction().begin();
-				alunoDaoI.cadastrar(alunoI);
+				alunoDao.cadastrar(aluno);
 				em.getTransaction().commit();
-			System.out.println("Aluno Gravado" + aluno.getNome());
+				System.out.println("Aluno Gravado" + aluno.getNome());
 			}
-		em.close();
+			em.close();
 		}
 	}
 
@@ -258,15 +262,34 @@ public class Principal {
 			Materia materia = materiaDao.buscarPorId(id);
 			if (materia.getNome_Materia() != " ") {
 				String resp;
-				System.out.println("Confirma a exclusao da " + materia.getNome_Materia());
-				resp = scanner.nextLine();
-				System.out.println(resp);
-				if (resp.equals("S") || resp.equals("s")) {
-					em.getTransaction().begin();
-					materiaDao.remover(materia);
-					em.getTransaction().commit();
-					System.out.println("Materia Removido ");
+				System.out.println(materia.getNome_Materia());
+				System.out.println("<A>lteração  <E>xclusão:");
+				resp = scanner.next();
+				if (resp.equals("A") || resp.equals("a")) {
+					System.out.println("Nome da Materia:");
+					scanner.nextLine();
+					nome_Materia = scanner.nextLine();
+					System.out.println("Confirma a alteracao?");
+					resp = scanner.nextLine();
+					if (resp.equals("S") || resp.equals("s")) {
+						materia.setNome_Materia(nome_Materia);
+						em.getTransaction().begin();
+						materiaDao.atualizar(materia);
+						em.getTransaction().commit();
+						System.out.println("Materia Alterado ");
+					}
+				} else if (resp.equals("E")) {
+					System.out.println("Confirma a exclusao da " + materia.getNome_Materia());
+					resp = scanner.nextLine();
+					System.out.println(resp);
+					if (resp.equals("S") || resp.equals("s")) {
+						em.getTransaction().begin();
+						materiaDao.remover(materia);
+						em.getTransaction().commit();
+						System.out.println("Materia Removido ");
+					}
 				}
+
 			}
 
 		} else {
@@ -338,21 +361,64 @@ public class Principal {
 		Float nota3Bimestre;
 		Float nota4Bimestre;
 		LocalDate dataCadastro = LocalDate.now();
-		System.out.println("I.D........:");
+		System.out.println("I.D.");
 		id = scanner.nextLong();
-		scanner.nextLine();
+
 		if (id > 0) {
+			System.out.println("I.D.Aluno..:");
+			id_aluno = scanner.nextLong();
+			System.out.println("I.D.Serie..:");
+			id_serie = scanner.nextLong();
+			System.out.println("I.D.Materia:");
+			id_materia = scanner.nextLong();
+			scanner.nextLine();
 			NotaDao notaDao = new NotaDao(em);
-			Nota nota = notaDao.buscarPorId(id);
+			Nota nota = notaDao.buscarPorIdComposto(id_aluno, id_serie, id_materia);
 			if (nota.getDataCadastro() != null) {
+				System.out.println(nota.getAluno().getNome());
+				System.out.println(nota.getSerie().getNome_Serie());
+				System.out.println(nota.getMateria().getNome_Materia());
+				System.out.println("1o Bimestre:");
+				System.out.println(nota.getNota1Bimestre());
+				System.out.println("2o Bimestre:");
+				System.out.println(nota.getNota2Bimestre());
+				System.out.println("3o Bimestre:");
+				System.out.println(nota.getNota3Bimestre());
+				System.out.println("4o Bimestre:");
+				System.out.println(nota.getNota4Bimestre());
+				System.out.println("<A>lteração  <E>xclusão:");
 				String resp;
-				System.out.println("Confirma a exclusao da ");
-				resp = scanner.nextLine();
-				if (resp == "S" || resp == "s") {
-					em.getTransaction().begin();
-					notaDao.remover(nota);
-					em.getTransaction().commit();
-					System.out.println("Nota Removido ");
+				resp = scanner.next();
+				if (resp.equals("A") || resp.equals("a")) {
+					System.out.println("1o Bimestre:");
+					nota1Bimestre = scanner.nextFloat();
+					System.out.println("2o Bimestre:");
+					nota2Bimestre = scanner.nextFloat();
+					System.out.println("3o Bimestre:");
+					nota3Bimestre = scanner.nextFloat();
+					System.out.println("4o Bimestre:");
+					nota4Bimestre = scanner.nextFloat();
+					System.out.println("Confirma a alteracao?");
+					resp = scanner.nextLine();
+					if (resp.equals("S") || resp.equals("s")) {
+						nota.setNota1Bimestre(nota1Bimestre);
+						nota.setNota2Bimestre(nota2Bimestre);
+						nota.setNota3Bimestre(nota3Bimestre);
+						nota.setNota4Bimestre(nota4Bimestre);
+						em.getTransaction().begin();
+						notaDao.atualizar(nota);
+						em.getTransaction().commit();
+						System.out.println("Nota Alterado ");
+					}
+				} else if (resp.equals("E") || resp.equals("e")) {
+					System.out.println("Confirma a exclusao da ");
+					resp = scanner.nextLine();
+					if (resp == "S" || resp == "s") {
+						em.getTransaction().begin();
+						notaDao.remover(nota);
+						em.getTransaction().commit();
+						System.out.println("Nota Removido ");
+					}
 				}
 			}
 		} else {
@@ -379,23 +445,29 @@ public class Principal {
 			nota3Bimestre = scanner.nextFloat();
 			System.out.println("4o Bimestre:");
 			nota4Bimestre = scanner.nextFloat();
-			//Nota nota = new Nota(nota1Bimestre, nota2Bimestre, nota3Bimestre, nota4Bimestre,
-			//		dataCadastro);
-			//nota.setPk(new NotaPK(id_aluno,id_serie,id_materia));
-			Nota nota = new Nota(10.0F, 9.5F, 7.0F, 6.0F,LocalDate.now());
-			nota.setPk(new NotaPK(2L, 1L, 1L));
-			NotaDao notaDao = new NotaDao(em);
+			Nota nota = new Nota(nota1Bimestre, nota2Bimestre, nota3Bimestre, nota4Bimestre, dataCadastro);
+			nota.setPk(new NotaPK(id_aluno, id_serie, id_materia));
+//			Nota nota = new Nota(10.0F, 9.5F, 7.0F, 6.0F, LocalDate.now());
+//			nota.setPk(new NotaPK(2L, 1L, 1L));
+			String resp = " ";
+			scanner.nextLine();
+			System.out.println("Confirma a inclusao?");
+			resp = scanner.nextLine();
+			if (resp.equals("S") || resp.equals("s")) {
+				NotaDao notaDao = new NotaDao(em);
 
-			em.getTransaction().begin();
+				em.getTransaction().begin();
 
-			notaDao.cadastrar(nota);
+				notaDao.cadastrar(nota);
 
-			em.getTransaction().commit();
-
-			System.out.println("Nota Gravado ");
-
+				em.getTransaction().commit();
+				em.close();
+				System.out.println("Nota Gravado ");
+			
+			}
 		}
-		em.close();
+		
+
 	}
 
 	private static void consNotaPorAluno() {
@@ -405,21 +477,20 @@ public class Principal {
 		id = scanner.nextLong();
 		scanner.nextLine();
 		NotaDao notaDao = new NotaDao(em);
-		List <Nota> nota = notaDao.buscarPorAluno(id);
-		//List <Nota> lista = new ArrayList<Nota>();
-		System.out.println("Aluno:"+nota.get(0).getAluno().getNome());
+		List<Nota> nota = notaDao.buscarPorAluno(id);
+		// List <Nota> lista = new ArrayList<Nota>();
+		System.out.println("Aluno:" + nota.get(0).getAluno().getNome());
 		System.out.println();
-		for (int i =0;i<=nota.size();i++) {
-			System.out.println(nota.get(i).getSerie()+" "+nota.get(i).getMateria().getNome_Materia()+
-					" "+ "1B:"+nota.get(i).getNota1Bimestre()+
-					    " 2B:"+nota.get(i).getNota2Bimestre()+
-					    " 3B:"+nota.get(i).getNota3Bimestre()+
-					    " 4B:"+nota.get(i).getNota4Bimestre());
-			//System.out.println(lista.get(i).getAluno().getNome());
-	
+		for (int i = 0; i <= nota.size(); i++) {
+			System.out.println(nota.get(i).getSerie() + " " + nota.get(i).getMateria().getNome_Materia() + " " + "1B:"
+					+ nota.get(i).getNota1Bimestre() + " 2B:" + nota.get(i).getNota2Bimestre() + " 3B:"
+					+ nota.get(i).getNota3Bimestre() + " 4B:" + nota.get(i).getNota4Bimestre());
+			// System.out.println(lista.get(i).getAluno().getNome());
+
 		}
 		em.close();
 	}
+
 	private static void consNotaPorSerie() {
 		EntityManager em = JPAUtil.getEntityManager();
 		Long id;
@@ -427,19 +498,16 @@ public class Principal {
 		id = scanner.nextLong();
 		scanner.nextLine();
 		NotaDao notaDao = new NotaDao(em);
-		List <Nota> nota = notaDao.buscarPorSerie(id);
-		//List <Nota> lista = new ArrayList<Nota>();
-		System.out.println("Serie:"+nota.get(0).getSerie().getNome_Serie());
+		List<Nota> nota = notaDao.buscarPorSerie(id);
+		// List <Nota> lista = new ArrayList<Nota>();
+		System.out.println("Serie:" + nota.get(0).getSerie().getNome_Serie());
 		System.out.println();
-		for (int i =0;i<=nota.size();i++) {
-			System.out.println(nota.get(i).getAluno().getNome() +
-					           nota.get(i).getMateria().getNome_Materia()+
-					    " 1B:"+nota.get(i).getNota1Bimestre()+
-					    " 2B:"+nota.get(i).getNota2Bimestre()+
-					    " 3B:"+nota.get(i).getNota3Bimestre()+
-					    " 4B:"+nota.get(i).getNota4Bimestre());
-			//System.out.println(lista.get(i).getAluno().getNome());
-	
+		for (int i = 0; i <= nota.size(); i++) {
+			System.out.println(nota.get(i).getAluno().getNome() + nota.get(i).getMateria().getNome_Materia() + " 1B:"
+					+ nota.get(i).getNota1Bimestre() + " 2B:" + nota.get(i).getNota2Bimestre() + " 3B:"
+					+ nota.get(i).getNota3Bimestre() + " 4B:" + nota.get(i).getNota4Bimestre());
+			// System.out.println(lista.get(i).getAluno().getNome());
+
 		}
 		em.close();
 	}

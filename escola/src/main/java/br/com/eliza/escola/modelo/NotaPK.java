@@ -45,7 +45,7 @@ public class NotaPK implements Serializable {
 		public void setMateriaPK(long materiaPK) {
 			this.materiaPK = materiaPK;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -73,4 +73,6 @@ public class NotaPK implements Serializable {
 				return false;
 			return true;
 		}
+		
+		
 }

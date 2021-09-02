@@ -35,14 +35,14 @@ private EntityManager em;
 		return em.createQuery(jpql, Nota.class).getResultList();
 	}
 	
-//	public Nota buscarPorIdComposto(long idAluno, long idSerie, long idMateria) {
-//		String jpql = "SELECT n FROM Nota n WHERE n.aluno.id = :idAluno AND n.serie.id = :idSerie AND n.materia.id = :idMateria";
-//		return em.createQuery(jpql, Nota.class)
-//				.setParameter("idAluno", idAluno)
-//				.setParameter("idSerie", idSerie)
-//				.setParameter("idMateria", idMateria)
-//				.getSingleResult();
-//	}
+	public Nota buscarPorIdComposto(long idAluno, long idSerie, long idMateria) {
+		String jpql = "SELECT n FROM Nota n WHERE n.aluno.id = :idAluno AND n.serie.id = :idSerie AND n.materia.id = :idMateria";
+		return em.createQuery(jpql, Nota.class)
+				.setParameter("idAluno", idAluno)
+				.setParameter("idSerie", idSerie)
+				.setParameter("idMateria", idMateria)
+				.getSingleResult();
+	}
 //	
 //	public Nota buscarPorIdCompostoNativeQuery(long idAluno, long idSerie, long idMateria) {
 //		String sql = "SELECT * FROM notas WHERE aluno_id = :idAluno AND serie_id = :idSerie AND materia_id = :idMateria";
