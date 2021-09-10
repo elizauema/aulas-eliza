@@ -97,7 +97,7 @@ public class Principal {
 		if (id > 0) {
 			AlunoDao alunoDao = new AlunoDao(em);
 			Aluno aluno = alunoDao.buscarPorId(id);
-			if (aluno.getNome() != " ") {
+			if (aluno != null) {
 				System.out.println("Nome.......:" + aluno.getNome());
 				System.out.println("Sobrenome..:" + aluno.getSobrenome());
 				System.out.println("Data Nascto:" + aluno.getDataNascto());
