@@ -25,14 +25,17 @@ private EntityManager em;
 		return em.find(Nota.class, id);
 	}
 	public List<Nota> buscarPorAluno(Long id_aluno) {
-		String jpql = "SELECT p FROM Nota p where p.aluno_id = :id_aluno";
+		String jpql = "SELECT n FROM Nota n where n.aluno.id = :id_aluno";
 		return em.createQuery(jpql, Nota.class)
 				.setParameter("id_aluno", id_aluno)
 				.getResultList();
 	}
 	public List<Nota> buscarPorSerie(Long id_serie) {
-		String jpql = "SELECT p FROM Nota p where serie = id_serie";
-		return em.createQuery(jpql, Nota.class).getResultList();
+		String jpql = "SELECT n FROM Nota n where n.serie.id = :id_serie";
+		return em.createQuery(jpql, Nota.class)
+				.setParameter("id_serie", id_serie)
+				.getResultList();
+			
 	}
 	
 	public Nota buscarPorIdComposto(long idAluno, long idSerie, long idMateria) {

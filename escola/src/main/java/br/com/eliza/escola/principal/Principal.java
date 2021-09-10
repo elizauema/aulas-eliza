@@ -69,6 +69,7 @@ public class Principal {
 				break;
 			case 6:
 				System.out.println("Consulta da Nota por Serie");
+				consNotaPorSerie();
 				break;
 			case 7:
 				break opcoes;
@@ -445,6 +446,9 @@ public class Principal {
 			System.out.println("4o Bimestre:");
 			nota4Bimestre = scanner.nextFloat();
 			Nota nota = new Nota(nota1Bimestre, nota2Bimestre, nota3Bimestre, nota4Bimestre, dataCadastro);
+			nota.setSerie(serie);
+			nota.setMateria(materia);
+			nota.setAluno(aluno);
 			nota.setPk(new NotaPK(id_aluno, id_serie, id_materia));
 //			Nota nota = new Nota(10.0F, 9.5F, 7.0F, 6.0F, LocalDate.now());
 //			nota.setPk(new NotaPK(2L, 1L, 1L));
@@ -478,9 +482,9 @@ public class Principal {
 		NotaDao notaDao = new NotaDao(em);
 		List<Nota> nota = notaDao.buscarPorAluno(id);
 		// List <Nota> lista = new ArrayList<Nota>();
-		System.out.println("Aluno:" + nota.get(0).getAluno().getNome());
+		System.out.println("Aluno:" + nota.get(0).getAluno());
 		System.out.println();
-		for (int i = 0; i <= nota.size(); i++) {
+		for (int i = 0; i < nota.size(); i++) {
 			System.out.println(nota.get(i).getSerie() + " " + nota.get(i).getMateria().getNome_Materia() + " " + "1B:"
 					+ nota.get(i).getNota1Bimestre() + " 2B:" + nota.get(i).getNota2Bimestre() + " 3B:"
 					+ nota.get(i).getNota3Bimestre() + " 4B:" + nota.get(i).getNota4Bimestre());
@@ -501,7 +505,7 @@ public class Principal {
 		// List <Nota> lista = new ArrayList<Nota>();
 		System.out.println("Serie:" + nota.get(0).getSerie().getNome_Serie());
 		System.out.println();
-		for (int i = 0; i <= nota.size(); i++) {
+		for (int i = 0; i < nota.size(); i++) {
 			System.out.println(nota.get(i).getAluno().getNome() + nota.get(i).getMateria().getNome_Materia() + " 1B:"
 					+ nota.get(i).getNota1Bimestre() + " 2B:" + nota.get(i).getNota2Bimestre() + " 3B:"
 					+ nota.get(i).getNota3Bimestre() + " 4B:" + nota.get(i).getNota4Bimestre());
