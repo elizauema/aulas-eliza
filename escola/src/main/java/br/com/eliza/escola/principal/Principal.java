@@ -260,7 +260,7 @@ public class Principal {
 		if (id > 0) {
 			MateriaDao materiaDao = new MateriaDao(em);
 			Materia materia = materiaDao.buscarPorId(id);
-			if (materia.getNome_Materia() != " ") {
+			if (materia != null) {
 				String resp;
 				System.out.println(materia.getNome_Materia());
 				System.out.println("<A>lteração  <E>xclusão:");
@@ -321,7 +321,7 @@ public class Principal {
 		if (id > 0) {
 			SerieDao serieDao = new SerieDao(em);
 			Serie serie = serieDao.buscarPorId(id);
-			if (serie.getNome_Serie() != " ") {
+			if (serie != null) {
 				String resp;
 				System.out.println("Confirma a exclusao da " + serie.getNome_Serie());
 				resp = scanner.nextLine();
@@ -374,7 +374,7 @@ public class Principal {
 			scanner.nextLine();
 			NotaDao notaDao = new NotaDao(em);
 			Nota nota = notaDao.buscarPorIdComposto(id_aluno, id_serie, id_materia);
-			if (nota.getDataCadastro() != null) {
+			if (nota != null) {
 				System.out.println(nota.getAluno().getNome());
 				System.out.println(nota.getSerie().getNome_Serie());
 				System.out.println(nota.getMateria().getNome_Materia());
