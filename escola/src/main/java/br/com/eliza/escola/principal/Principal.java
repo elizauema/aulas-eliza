@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import br.com.eliza.escola.dao.AlunoDao;
 import br.com.eliza.escola.dao.MateriaDao;
@@ -75,6 +76,7 @@ public class Principal {
 				break opcoes;
 			}
 		}
+		System.out.println("Goodbye");
 		scanner.close();
 	}
 
@@ -372,9 +374,11 @@ public class Principal {
 			System.out.println("I.D.Materia:");
 			id_materia = scanner.nextLong();
 			scanner.nextLine();
+			String resp = "";
 			NotaDao notaDao = new NotaDao(em);
-			Nota nota = notaDao.buscarPorIdComposto(id_aluno, id_serie, id_materia);
-			if (nota != null) {
+	//		if (nota != null) {
+			try {
+				Nota nota = notaDao.buscarPorIdComposto(id_aluno, id_serie, id_materia);
 				System.out.println(nota.getAluno().getNome());
 				System.out.println(nota.getSerie().getNome_Serie());
 				System.out.println(nota.getMateria().getNome_Materia());
@@ -387,7 +391,7 @@ public class Principal {
 				System.out.println("4o Bimestre:");
 				System.out.println(nota.getNota4Bimestre());
 				System.out.println("<A>lteração  <E>xclusão:");
-				String resp;
+
 				resp = scanner.next();
 				if (resp.equals("A") || resp.equals("a")) {
 					System.out.println("1o Bimestre:");
@@ -420,7 +424,15 @@ public class Principal {
 						System.out.println("Nota Removido ");
 					}
 				}
+			}catch(NoResultException e) {
+				System.out.println("nota nao encontrada");
+			}catch(Exception e) {
+				String mensagem = "Ocorreu um erro inesperado na execução";
+				mensagem = mensagem + ((!resp.equals("")||(!resp.toLowerCase().equals("a") && !resp.toLowerCase().equals("e") )) ?
+				"do programa" : resp.toLowerCase().contentEquals("a")? "da alteração" : "da exclusao");		
+				System.out.println(mensagem);
 			}
+		
 		} else {
 			System.out.println("Id Aluno..:");
 			id_aluno = scanner.nextLong();
@@ -469,8 +481,6 @@ public class Principal {
 			
 			}
 		}
-		
-
 	}
 
 	private static void consNotaPorAluno() {
