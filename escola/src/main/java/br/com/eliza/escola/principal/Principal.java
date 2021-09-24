@@ -425,11 +425,11 @@ public class Principal {
 					}
 				}
 			}catch(NoResultException e) {
-				System.out.println("nota nao encontrada");
-			}catch(Exception e) {
-				String mensagem = "Ocorreu um erro inesperado na execução";
-				mensagem = mensagem + ((!resp.equals("")||(!resp.toLowerCase().equals("a") && !resp.toLowerCase().equals("e") )) ?
-				"do programa" : resp.toLowerCase().contentEquals("a")? "da alteração" : "da exclusao");		
+				System.out.println("Nota não encontrada");
+			}catch (Exception e) {
+				String mensagem = "Ocorreu um erro inesperado na execução ";
+				mensagem = mensagem + ((resp.equals("") || (!resp.toLowerCase().equals("a") && !resp.toLowerCase().equals("e"))) ?
+						"do programa" : resp.toLowerCase().equals("a") ? "da alteração" : "da exclusão");
 				System.out.println(mensagem);
 			}
 		
