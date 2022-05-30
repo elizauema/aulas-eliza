@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.eliza.bibliaapi.dados.BibliaApiExibe;
+import br.com.eliza.bibliaapi.dto.saida.BibliaApiExibe;
 import br.com.eliza.bibliaapi.service.ConsultaBibliaService;
 
 @RestController
@@ -23,8 +23,9 @@ public class BibliaController {
 	//criar outro endpoint que aceita nome do livro,capitulo e versiculo
 	@GetMapping(value = "/livro/{nomeDoLivro}/capitulo/{numCapitulo}/versiculo/{numVersiculo}")
 	public ResponseEntity<BibliaApiExibe> consultarPorLivroCapituloEVersiculo(@PathVariable String nomeDoLivro, @PathVariable String numCapitulo, @PathVariable String numVersiculo){
-		return null;
-		//return new ResponseEntity<>("Fim da Consulta", HttpStatus.OK);
+		BibliaApiExibe bibliaApiExibe = consultaBibliaService.consultarBibliaVersiculo(nomeDoLivro, numCapitulo, numVersiculo);
+		return new ResponseEntity<>(bibliaApiExibe, HttpStatus.OK);
 	}
+	
 	
 }

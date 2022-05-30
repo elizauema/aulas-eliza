@@ -2,14 +2,20 @@ package br.com.eliza.bibliaapi.service;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.eliza.bibliaapi.dados.BibliaApiExibe;
-import br.com.eliza.bibliaapi.model.ParteDaBiblia;
+import br.com.eliza.bibliaapi.dto.entrada.Abreviacao;
+import br.com.eliza.bibliaapi.dto.entrada.ParteDaBiblia;
+import br.com.eliza.bibliaapi.dto.entrada.Versiculo;
+import br.com.eliza.bibliaapi.dto.saida.AbreviacaoSaida;
+import br.com.eliza.bibliaapi.dto.saida.BibliaApiExibe;
+import br.com.eliza.bibliaapi.dto.saida.VersiculoSaida;
 
 @Service
 public class ConsultaBibliaService {
@@ -23,11 +29,35 @@ public class ConsultaBibliaService {
             String nome = parteDaBiblia.getLivro().getNome();
 			String autor = parteDaBiblia.getLivro().getAutor();
             String grupo = parteDaBiblia.getLivro().getGrupo();
+            String traducao = parteDaBiblia.getLivro().getTraducao();
+            Abreviacao abreviacao = parteDaBiblia.getLivro().getAbreviacao();
+            double numero = parteDaBiblia.getCapitulo().getNumero();
+            double qtdeVerso = parteDaBiblia.getCapitulo().getQtdeVerso();
+            List<Versiculo> versiculos = parteDaBiblia.getVersiculos();
+            List<VersiculoSaida> versiculosSaida = new ArrayList<VersiculoSaida>();
+            
+            AbreviacaoSaida abreviacaoSaida = new AbreviacaoSaida();
+            abreviacaoSaida.setEn(abreviacao.getEn());
+            abreviacaoSaida.setPt(abreviacao.getPt());
+            
+            for (int i = 0; i < versiculos.size(); i++) {
+            	//VersiculoSaida versiculoSaida = new VersiculoSaida(versiculos.get(i).getNumero(),versiculos.get(i).getTexto());
+            	//versiculosSaida.add(versiculoSaida);
+            	// estas duas linhas é igual as 4 abaixo
+            	VersiculoSaida versiculoSaida = new VersiculoSaida();
+            	versiculoSaida.setNumero(versiculos.get(i).getNumero());
+            	versiculoSaida.setTexto(versiculos.get(i).getTexto());
+            	versiculosSaida.add(versiculoSaida);
+            	
+            }
+            
             // criar com todos os dados
-			return new BibliaApiExibe(nome, autor, grupo);
+            // transforma lista de versiculo em uma lista de versiculo saida e passar no construtor na linha 41
+            //return new BibliaApiExibe(nome, autor, grupo, traducao, abreviacaoSaida, numero, qtdeVerso, List<VersiculoSaida> versiculosSaida);
+            return new BibliaApiExibe(nome, autor, grupo, traducao, abreviacaoSaida, numero, qtdeVerso, versiculosSaida);
+
 		}catch(Exception e) {
 			throw new RuntimeException("Ocorreu um erro ao recuperar dados da bibilia");
-			
 		}
 	}
 	
@@ -38,6 +68,44 @@ public class ConsultaBibliaService {
 		RequisicaoHttpService requisicaoHttpService = new RequisicaoHttpService();
 		HttpResponse<String> response = requisicaoHttpService.fazerChamadaHttp(urlApiBiblia);
 		return objectMapper.readValue(response.body(), ParteDaBiblia.class);
-		
+	}
+	
+	// fazer consulta por livro,capitulo e versiculo
+	// duplicar os metodos
+	
+	private ParteDaBiblia chamarApiBibiliaVersiculo(String livro, String capitulo,String numVersiculo ) throws IOException, InterruptedException {
+		String urlApiBiblia = "https://www.abibliadigital.com.br/api/verses/nvi/" + livro + "/" + capitulo + "/" + numVersiculo;
+		RequisicaoHttpService requisicaoHttpService = new RequisicaoHttpService();
+		HttpResponse<String> response = requisicaoHttpService.fazerChamadaHttp(urlApiBiblia);
+		return objectMapper.readValue(response.body(), ParteDaBiblia.class);
+	}
+	
+	public BibliaApiExibe consultarBibliaVersiculo(String livro, String capitulo, String numVersiculo ) {
+		try {
+			ParteDaBiblia parteDaBiblia = chamarApiBibiliaVersiculo(livro, capitulo, numVersiculo);
+			String nome = parteDaBiblia.getLivro().getNome();
+			String autor = parteDaBiblia.getLivro().getAutor();
+            String grupo = parteDaBiblia.getLivro().getGrupo();
+            String traducao = parteDaBiblia.getLivro().getTraducao();
+            Abreviacao abreviacao = parteDaBiblia.getLivro().getAbreviacao();
+            double numero = parteDaBiblia.getCapitulo().getNumero();
+            double qtdeVerso = parteDaBiblia.getCapitulo().getQtdeVerso();
+            AbreviacaoSaida abreviacaoSaida = new AbreviacaoSaida();
+            abreviacaoSaida.setEn(abreviacao.getEn());
+            abreviacaoSaida.setPt(abreviacao.getPt());
+            
+            List<Versiculo> versiculos = parteDaBiblia.getVersiculos();
+            List<VersiculoSaida> versiculosSaida = new ArrayList<VersiculoSaida>();
+             
+            	VersiculoSaida versiculoSaida = new VersiculoSaida();
+            	versiculoSaida.setNumero(versiculos.get(0).getNumero());
+            	versiculoSaida.setTexto(versiculos.get(0).getTexto());
+            	versiculosSaida.add(versiculoSaida);
+           
+            return new BibliaApiExibe(nome, autor, grupo, traducao, abreviacaoSaida, numero, qtdeVerso, versiculosSaida);
+
+		}catch(Exception e) {
+			throw new RuntimeException("Ocorreu um erro ao recuperar dados da bibilia");
+		}
 	}
 }
