@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.eliza.bibliaapi.dto.entrada.Abreviacao;
 import br.com.eliza.bibliaapi.dto.entrada.ParteDaBiblia;
+import br.com.eliza.bibliaapi.dto.entrada.UnicoVerso;
 import br.com.eliza.bibliaapi.dto.entrada.Versiculo;
 import br.com.eliza.bibliaapi.dto.saida.AbreviacaoSaida;
 import br.com.eliza.bibliaapi.dto.saida.BibliaApiExibe;
@@ -73,34 +74,33 @@ public class ConsultaBibliaService {
 	// fazer consulta por livro,capitulo e versiculo
 	// duplicar os metodos
 	
-	private ParteDaBiblia chamarApiBibiliaVersiculo(String livro, String capitulo,String numVersiculo ) throws IOException, InterruptedException {
+	private UnicoVerso chamarApiBibiliaVersiculo(String livro, String capitulo,String numVersiculo ) throws IOException, InterruptedException {
 		String urlApiBiblia = "https://www.abibliadigital.com.br/api/verses/nvi/" + livro + "/" + capitulo + "/" + numVersiculo;
 		RequisicaoHttpService requisicaoHttpService = new RequisicaoHttpService();
 		HttpResponse<String> response = requisicaoHttpService.fazerChamadaHttp(urlApiBiblia);
-		return objectMapper.readValue(response.body(), ParteDaBiblia.class);
+		return objectMapper.readValue(response.body(), UnicoVerso.class);
 	}
 	
 	public BibliaApiExibe consultarBibliaVersiculo(String livro, String capitulo, String numVersiculo ) {
 		try {
-			ParteDaBiblia parteDaBiblia = chamarApiBibiliaVersiculo(livro, capitulo, numVersiculo);
-			String nome = parteDaBiblia.getLivro().getNome();
-			String autor = parteDaBiblia.getLivro().getAutor();
-            String grupo = parteDaBiblia.getLivro().getGrupo();
-            String traducao = parteDaBiblia.getLivro().getTraducao();
-            Abreviacao abreviacao = parteDaBiblia.getLivro().getAbreviacao();
-            double numero = parteDaBiblia.getCapitulo().getNumero();
-            double qtdeVerso = parteDaBiblia.getCapitulo().getQtdeVerso();
+			UnicoVerso unicoVerso = chamarApiBibiliaVersiculo(livro, capitulo, numVersiculo);
+			String nome = unicoVerso.getLivro().getNome();
+			String autor = unicoVerso.getLivro().getAutor();
+            String grupo = unicoVerso.getLivro().getGrupo();
+            String traducao = unicoVerso.getLivro().getTraducao();
+            Abreviacao abreviacao = unicoVerso.getLivro().getAbreviacao();
+            double numero = Double.parseDouble(capitulo);
+            double qtdeVerso = 1;
             AbreviacaoSaida abreviacaoSaida = new AbreviacaoSaida();
             abreviacaoSaida.setEn(abreviacao.getEn());
             abreviacaoSaida.setPt(abreviacao.getPt());
-            
-            List<Versiculo> versiculos = parteDaBiblia.getVersiculos();
+
             List<VersiculoSaida> versiculosSaida = new ArrayList<VersiculoSaida>();
              
-            	VersiculoSaida versiculoSaida = new VersiculoSaida();
-            	versiculoSaida.setNumero(versiculos.get(0).getNumero());
-            	versiculoSaida.setTexto(versiculos.get(0).getTexto());
-            	versiculosSaida.add(versiculoSaida);
+        	VersiculoSaida versiculoSaida = new VersiculoSaida();
+        	versiculoSaida.setNumero(unicoVerso.getNumeroVersiculo());
+        	versiculoSaida.setTexto(unicoVerso.getTextoVersiculo());
+        	versiculosSaida.add(versiculoSaida);
            
             return new BibliaApiExibe(nome, autor, grupo, traducao, abreviacaoSaida, numero, qtdeVerso, versiculosSaida);
 
