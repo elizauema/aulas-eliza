@@ -16,15 +16,15 @@ public class DateUtilTest {
 	
 	@Test
 	public void deveria_RetornarTrue_Quando_ADataEhValida() {
-		boolean resultado = DateUtil.isValid("2021-08-26", dateFormatter);
+		boolean resultado = DateUtil.isValid("2021-08-26");
 		assertTrue(resultado);
 	}
 	
 	@Test
 	public void deveria_RetornarFalse_Quando_ADataEhInvalida() {
-		boolean resultado = DateUtil.isValid("2021-02-29", dateFormatter);
-		boolean resultado2 = DateUtil.isValid("2021-02-30", dateFormatter);
-		boolean resultado3 = DateUtil.isValid("2021-50-40", dateFormatter);
+		boolean resultado = DateUtil.isValid("2021-02-29");
+		boolean resultado2 = DateUtil.isValid("2021-02-30");
+		boolean resultado3 = DateUtil.isValid("2021-50-40");
 		assertFalse(resultado);
 		assertFalse(resultado2);
 		assertFalse(resultado3);
@@ -32,7 +32,7 @@ public class DateUtilTest {
 	
 	@Test
 	public void deveria_RetornarTrue_Quando_EhAnoBisexto() {
-		boolean resultado = DateUtil.isValid("1992-02-29", dateFormatter);
+		boolean resultado = DateUtil.isValid("1992-02-29");
 		assertTrue(resultado);
 	}
 
