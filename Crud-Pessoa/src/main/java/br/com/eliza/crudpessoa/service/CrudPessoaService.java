@@ -1,5 +1,6 @@
 package br.com.eliza.crudpessoa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,29 +16,29 @@ import br.com.eliza.crudpessoa.repository.PessoaRepository;
 public class CrudPessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	public Pessoa incluirPessoa(Pessoa pessoa) {
 		return pessoaRepository.save(pessoa);
 	}
-	
+
 	public Pessoa alterarPessoa(Pessoa pessoa, Long id) {
 		Optional<Pessoa> pessoaOptional = pessoaRepository.findById(id);
 		if (pessoaOptional.isEmpty()) {
-			 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		pessoa.setId(id);
 		return pessoaRepository.save(pessoa);
 	}
-	
+
 	public void excluirPessoa(Long id) {
 		pessoaRepository.deleteById(id);
 	}
-	
+
 	public List<Pessoa> listarPessoa() {
-		
-		 return (List<Pessoa>) pessoaRepository.findAll();
-		
+		List<Pessoa> pessoas = new ArrayList<>();
+		//pessoaRepository.findAll().forEach(p -> pessoas.add(p));
+		pessoaRepository.findAll().forEach(pessoas::add);
+		return pessoas;
+
 	}
 }
-
-

@@ -41,9 +41,9 @@ public class CrudPessoaController {
 	}
 
 	@GetMapping("/pessoas")
-	public List<Pessoa> listarPessoa() {
+	public ResponseEntity<List<Pessoa>> listarPessoa() {
 		List lista = crudPessoaService.listarPessoa();
-		return lista;
+		return new ResponseEntity<>(lista, HttpStatus.OK);
 	} 
 
 }
