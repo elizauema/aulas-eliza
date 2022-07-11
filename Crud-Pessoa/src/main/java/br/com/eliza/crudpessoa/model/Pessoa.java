@@ -27,8 +27,9 @@ public class Pessoa {
 	public Pessoa(){
 	}
 	
-	public Pessoa(String cpf, String nome, String dtnascto, String sexo, Endereco endereco) {
+	public Pessoa(Long id, String cpf, String nome, String dtnascto, String sexo, Endereco endereco) {
 		super();
+		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
 		this.dtnascto = dtnascto;
