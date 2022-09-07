@@ -1,0 +1,7 @@
+<div class="header" th:fragment="head">
+	<a href="#default" class="logo">T e l a M e n u</a>
+	<div class="header-right">
+		<a th:href="@{/pratoEntrada}" th:classappend="${#request.getRequestURI()=='/pratoEntrada' ? 'active': ''}">Entrada</a>
+		<a th:href="@{/pratoPrincipal}" th:classappend="${#request.getRequestURI()=='/pratoPrincipal' ? 'active': ''}">Principal</a>
+	</div>
+</div>
